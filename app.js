@@ -4,6 +4,20 @@ const port = 3000;
 
 app.use(express.json());
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to the Users CRUD API',
+    endpoints: {
+      getAllUsers: 'GET /users',
+      getOneUser: 'GET /users/:id',
+      createUser: 'POST /users',
+      updateUser: 'PUT /users/:id',
+      deleteUser: 'DELETE /users/:id'
+    }
+  });
+});
+
 let users = [];
 let idCounter = 1;
 
@@ -42,6 +56,10 @@ app.delete('/users/:id', (req, res) => {
   res.status(204).send();
 });
 
-app.listen(port, () => {
-  console.log(`CRUD API server running at http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`CRUD API server running at http://localhost:${port}`);
+  });
+}
+
+module.exports = { app, port };
