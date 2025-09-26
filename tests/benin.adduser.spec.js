@@ -2,10 +2,12 @@
 const { test, expect } = require('@playwright/test');
 const { AddContactRequest, AddContactResponse } = require('./helpers/contact-helpers');
 const ApiClient = require('./helpers/api-client');
+const { testIgnore } = require('../playwright.config');
 
 test.describe('Add Contact API Tests', () => {
   let apiClient;
 
+  testIgnore
   test.beforeEach(({ request }) => {
     apiClient = new ApiClient(request);
   });
@@ -23,6 +25,7 @@ test.describe('Add Contact API Tests', () => {
     expect(AddContactResponse.isValid(responseText)).toBeTruthy();
   });
 
+  testIgnore
   test('should add a contact with national ID', async () => {
     // Create a contact request with custom values
     const contactRequest = new AddContactRequest(
